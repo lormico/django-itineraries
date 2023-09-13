@@ -1,10 +1,36 @@
+{% load static %}
 {% load leaflet_tags %}
 
 <head>
     {% leaflet_js %}
     {% leaflet_css %}
+    <style>
+
+        .leaflet-container { /* all maps */
+            width: 1200px;
+            height: 800px;
+        }
+
+        /* Resize the "display_raw" textbox */
+        .django-leaflet-raw-textarea {
+            width: 100%;
+        }
+
+    </style>
+    <script type="text/javascript" src="{% static "geojsoncss/geojsoncss.js" %}"></script>
 </head>
 
 <body>
-    {% leaflet_map "yourmap" %}
+{% leaflet_map "main" callback="main_map_init" %}
+<script src="//ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script type="text/javascript">
+    function main_map_init(map, options) {
+        map.options.wheelPxPerZoomLevel = 120
+
+        const dataurl = '{% url "data" %}';
+        $.getJSON(dataurl, function (data) {
+            L.geoJson.css(data).addTo(map);
+        })
+    }
+</script>
 </body>

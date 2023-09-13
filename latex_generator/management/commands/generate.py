@@ -5,8 +5,7 @@ from django.core.management import BaseCommand
 from django.template.backends.jinja2 import Template
 from django.template.loader import get_template
 
-from loader.models import Tranche
-from loader.models.stay import Stay
+from loader.models import Stay, Tranche
 
 
 def save_generated(file_name, content):

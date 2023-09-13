@@ -12,7 +12,6 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from pathlib import Path
 
-import django_admin_geomap
 from django.conf.global_settings import STATICFILES_FINDERS, STATIC_ROOT
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -28,7 +27,10 @@ SECRET_KEY = 'django-insecure-m%=+vp%7a44le-(2f^zv97j3&963cn#dgy5e^(o67h91_5j)+a
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    "localhost",
+    "casalorenzo.ddns.net"
+]
 
 
 # Application definition
@@ -46,6 +48,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.gis',
 ]
 
 MIDDLEWARE = [
@@ -65,7 +68,6 @@ TEMPLATES = [
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
             BASE_DIR / 'templates' / 'html',
-            Path(django_admin_geomap.__file__).parent / "templates"
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -96,7 +98,7 @@ WSGI_APPLICATION = 'itinerari.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
+        'ENGINE': 'django.contrib.gis.db.backends.postgis',
         'NAME': 'itinerari',
         'USER': 'itinerariuser',
         'PASSWORD': 'password',
@@ -154,11 +156,30 @@ from latex_generator.settings import *
 TEMPLATE_CONTEXT_PROCESSORS = "django.template.context_processors.request"
 
 STATICFILES_FINDERS.append('djangobower.finders.BowerFinder')
-STATIC_ROOT = BASE_DIR / "static"
-BOWER_COMPONENTS_ROOT = STATIC_ROOT / "components"
+# STATIC_ROOT = BASE_DIR / "static"
+# BOWER_COMPONENTS_ROOT = STATIC_ROOT / "components"
 
 BOWER_INSTALLED_APPS = (
     'jquery',
     'jquery-ui',
     'bootstrap'
+)
+
+
+SERIALIZATION_MODULES = {
+    "geojson": "django.contrib.gis.serializers.geojson",
+    "geojsoncss": "map.serializers.geojsoncss",
+ }
+
+LEAFLET_CONFIG = {
+    'PLUGINS': {
+        'geojsoncss': {
+            'js': 'geojsoncss/geojsoncss.js',
+            'auto-include': True,
+        }
+    }
+}
+
+STATICFILES_DIRS = (
+  BASE_DIR / 'static/',
 )

@@ -1,19 +1,19 @@
 from typing import Optional
 
 from django.contrib import admin
+from leaflet.admin import LeafletGeoAdmin
 
-from loader.admin import GeoAdmin
-from loader.admin.models import try_make_naive, localize
-from loader.models.stay import Stay
+from loader.admin.models import localize, try_make_naive
+from loader.models import Stay
 
 
 @admin.register(Stay)
-class StayAdmin(GeoAdmin):
+class StayAdmin(LeafletGeoAdmin):
     save_as = True
 
     def get_form(self, request, obj: Optional[Stay] = None, change=False, **kwargs):
         if request.method == "GET" and obj:
-            lat, lon = obj.latitude, obj.longitude
+            lon, lat = obj.location.coords
             obj.checkin = try_make_naive(obj.checkin, lat, lon)
             obj.checkout = try_make_naive(obj.checkout, lat, lon)
             obj.cancel_before = try_make_naive(obj.cancel_before, lat, lon)

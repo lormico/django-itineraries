@@ -1,9 +1,9 @@
 from django.contrib import admin
+from leaflet.admin import LeafletGeoAdmin
 
-from loader.admin import GeoAdmin
 from loader.models import SideTrip
 
 
 @admin.register(SideTrip)
-class SideTripAdmin(GeoAdmin):
+class SideTripAdmin(LeafletGeoAdmin):
     save_as = True

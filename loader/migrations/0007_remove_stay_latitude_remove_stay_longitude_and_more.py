@@ -2,7 +2,7 @@
 
 from django.db import migrations, models
 import django.db.models.deletion
-import loader.mixins
+# import loader.mixins
 
 
 class Migration(migrations.Migration):
@@ -34,6 +34,6 @@ class Migration(migrations.Migration):
                 ('tranche', models.ForeignKey(on_delete=django.db.models.deletion.DO_NOTHING, to='loader.tranche')),
             ],
             # bases=(models.Model, loader.mixins.GeoItemModelMixin),
-            bases=(loader.mixins.GeoItemModelMixin,),
+            # bases=(loader.mixins.GeoItemModelMixin,),
         ),
     ]
