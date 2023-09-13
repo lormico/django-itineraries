@@ -1,0 +1,21 @@
+\chapter{% raw %}{{% endraw %}{{ tranche.short_descr }}{% raw %}}{% endraw %}
+\label{ch:{{ tranche.id }}}
+
+\section{Pernottamento}
+\label{sec:{{ tranche.id}}.stays}
+{% for stay in stays -%}
+\subsection*{\emph{ {{ stay.name }} }}}}
+	\begin{tabular}{>{\bfseries}l  r}
+        \toprule
+	    Notti & {{ (stay.checkout - stay.checkin).days + 1 }} \\
+        Check-in & {{ stay.checkin | strftime }} \\
+        Check-out & {{ stay.checkout | strftime }} \\
+        Prezzo & {% if stay.price_currency != "EUR" %}{{ "%.0f" | format(stay.price) }}¥
+                                                        ({{ "%.2f" | format(jpy2eur(stay.price)) }}€)
+                                                    {% else %}{{ "%.2f" | format(stay.price) }}€
+                                                    {% endif %} \\
+        Sito & {{ stay.website }} \\
+        Annullabile entro & {{ stay.cancel_before | to_cet }} \\
+		\bottomrule
+    \end{tabular}
+{% endfor %}
