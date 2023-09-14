@@ -12,11 +12,9 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from pathlib import Path
 
-from django.conf.global_settings import STATICFILES_FINDERS, STATIC_ROOT
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
-
+MAIN_APP_DIR = Path(__file__).resolve().parent
+BASE_DIR = MAIN_APP_DIR.parent
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
@@ -29,6 +27,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
     "localhost",
+    "192.168.1.101",
     "casalorenzo.ddns.net"
 ]
 
@@ -36,7 +35,7 @@ ALLOWED_HOSTS = [
 # Application definition
 
 INSTALLED_APPS = [
-    # 'django.contrib.gis',
+    'django_google_fonts',
     'schedule',
     'djangobower',
     'leaflet',
@@ -139,10 +138,7 @@ USE_I18N = True
 USE_TZ = True
 
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = 'static/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
@@ -155,15 +151,21 @@ from latex_generator.settings import *
 
 TEMPLATE_CONTEXT_PROCESSORS = "django.template.context_processors.request"
 
-STATICFILES_FINDERS.append('djangobower.finders.BowerFinder')
-# STATIC_ROOT = BASE_DIR / "static"
-# BOWER_COMPONENTS_ROOT = STATIC_ROOT / "components"
+#######################
+# Static configurations
+# URL to use when referring to static files located in STATIC_ROOT
+STATIC_URL = 'static/'
 
-BOWER_INSTALLED_APPS = (
-    'jquery',
-    'jquery-ui',
-    'bootstrap'
+# The absolute path to the directory where collectstatic will collect static files for deployment
+STATIC_ROOT = BASE_DIR / "static"
+
+# The additional locations the staticfiles app will traverse
+import map
+STATICFILES_DIRS = (
+    MAIN_APP_DIR / 'static',
+    ("map", Path(map.__file__).parent / "static")
 )
+#######################
 
 
 SERIALIZATION_MODULES = {
@@ -174,12 +176,10 @@ SERIALIZATION_MODULES = {
 LEAFLET_CONFIG = {
     'PLUGINS': {
         'geojsoncss': {
-            'js': 'geojsoncss/geojsoncss.js',
+            'js': 'map/js/geojsoncss/geojsoncss.js',
             'auto-include': True,
         }
     }
 }
 
-STATICFILES_DIRS = (
-  BASE_DIR / 'static/',
-)
+GOOGLE_FONTS = ["Kiwi Maru"]

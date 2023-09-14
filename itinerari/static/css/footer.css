@@ -1,0 +1,14 @@
+.footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #195f9f;
+    color: white;
+    font-family: 'Kiwi Maru', sans-serif;
+    font-size: .75rem;
+    padding: .3rem;
+}
+
+.footer a {
+    color: white;
+}

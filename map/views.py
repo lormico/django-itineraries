@@ -10,7 +10,7 @@ from loader.models import SideTrip, Stay
 # Create your views here.
 def index(request):
     template = loader.get_template("map/map.html")
-    return HttpResponse(template.render(context=dict(), request=request))
+    return HttpResponse(template.render(context={"title": "Map"}, request=request))
 
 
 def data(request):
