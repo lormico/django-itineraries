@@ -15,19 +15,25 @@
 {% endblock %}
 
 {% block content %}
-    {% leaflet_map "map" callback="main_map_init" %}
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    {% leaflet_map "map" %}
     <script type="text/javascript">
-        function main_map_init(map, options) {
-            map.options.wheelPxPerZoomLevel = 120;
-            options.zoomControl = false;
+        const dataurl = '{% url "data" %}';
 
-            const dataurl = '{% url "data" %}';
-            $.getJSON(dataurl, function (data) {
-                const geoJsonLayer = L.geoJson.css(data).addTo(map);
-                map.fitBounds(geoJsonLayer.getBounds())
-            });
+        window.addEventListener("map:init", function (event) {
+            const map = event.detail.map;
 
-        }
+            map.resetviewControl.remove();
+            map.zoomControl.remove();
+
+            // Download GeoJSON data with Ajax
+            fetch(dataurl)
+                .then(function (response) {
+                    return response.json();
+                })
+                .then(function (data) {
+                    const geoJsonLayer = L.geoJson.css(data).addTo(map);
+                    map.fitBounds(geoJsonLayer.getBounds());
+                });
+        });
     </script>
 {% endblock %}

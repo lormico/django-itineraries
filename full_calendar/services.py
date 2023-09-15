@@ -1,15 +1,13 @@
 from datetime import timedelta
 from typing import Dict, List
 
-from django.contrib.staticfiles import finders
 from skyfield import api, almanac
 
 from data.admin.models import try_make_naive
 from data.models import Stay
 
 ts = api.load.timescale()
-ephemerids_file = finders.find("de421.bsp")
-eph = api.load(ephemerids_file)
+eph = api.load("de421.bsp")
 
 
 def get_events() -> List[Dict[str, str]]:
