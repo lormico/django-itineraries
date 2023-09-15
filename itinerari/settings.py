@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'schedule',
     'djangobower',
     'leaflet',
+    'full_calendar.apps.FullCalendarConfig',
     'loader.apps.LoaderConfig',
     'latex_generator.apps.LatexGeneratorConfig',
     'django.contrib.admin',

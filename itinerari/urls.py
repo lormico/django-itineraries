@@ -21,6 +21,7 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('calendar/', include("full_calendar.urls")),
     path("loader/", include("loader.urls")),
     path("map/", include("map.urls")),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

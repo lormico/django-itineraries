@@ -22,7 +22,7 @@ class StayAdmin(LeafletGeoAdmin):
         return form
 
     def save_form(self, request, form, change):
-        lat, lon = form.instance.latitude, form.instance.longitude
+        lon, lat = form.instance.location
         form.instance.checkin = localize(form.instance.checkin, lat, lon)
         form.instance.checkout = localize(form.instance.checkout, lat, lon)
         form.instance.cancel_before = localize(form.instance.cancel_before, lat, lon)
