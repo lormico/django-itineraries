@@ -1,7 +1,7 @@
 from django.contrib.gis.db import models
 from django.contrib.gis.geos import Point
 
-from loader.models import Tranche, Website
+from data.models import Tranche, Website
 
 
 class Stay(models.Model):

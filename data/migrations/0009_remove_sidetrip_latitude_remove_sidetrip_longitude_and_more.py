@@ -8,7 +8,7 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('loader', '0008_sidetrip_latitude_sidetrip_longitude_stay_latitude_and_more'),
+        ('data', '0008_sidetrip_latitude_sidetrip_longitude_stay_latitude_and_more'),
     ]
 
     operations = [

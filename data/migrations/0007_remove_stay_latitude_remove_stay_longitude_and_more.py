@@ -2,13 +2,13 @@
 
 from django.db import migrations, models
 import django.db.models.deletion
-# import loader.mixins
+# import data.mixins
 
 
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('loader', '0006_alter_stay_payment_date'),
+        ('data', '0006_alter_stay_payment_date'),
     ]
 
     operations = [
@@ -31,9 +31,9 @@ class Migration(migrations.Migration):
                 ('id', models.CharField(primary_key=True, serialize=False, verbose_name='ID')),
                 ('name', models.CharField()),
                 ('date', models.DateField()),
-                ('tranche', models.ForeignKey(on_delete=django.db.models.deletion.DO_NOTHING, to='loader.tranche')),
+                ('tranche', models.ForeignKey(on_delete=django.db.models.deletion.DO_NOTHING, to='data.tranche')),
             ],
-            # bases=(models.Model, loader.mixins.GeoItemModelMixin),
-            # bases=(loader.mixins.GeoItemModelMixin,),
+            # bases=(models.Model, data.mixins.GeoItemModelMixin),
+            # bases=(data.mixins.GeoItemModelMixin,),
         ),
     ]

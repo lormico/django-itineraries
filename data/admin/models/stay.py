@@ -3,8 +3,8 @@ from typing import Optional
 from django.contrib import admin
 from leaflet.admin import LeafletGeoAdmin
 
-from loader.admin.models import localize, try_make_naive
-from loader.models import Stay
+from data.admin.models import localize, try_make_naive
+from data.models import Stay
 
 
 @admin.register(Stay)

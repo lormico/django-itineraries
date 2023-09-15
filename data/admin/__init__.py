@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from loader.models import Tranche, Website
+from data.models import Tranche, Website
 
 admin.site.register(Tranche)
 admin.site.register(Website)

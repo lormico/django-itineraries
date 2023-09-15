@@ -7,7 +7,7 @@ import django.utils.timezone
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('loader', '0003_alter_stay_options_alter_stay_cancel_before_and_more'),
+        ('data', '0003_alter_stay_options_alter_stay_cancel_before_and_more'),
     ]
 
     operations = [

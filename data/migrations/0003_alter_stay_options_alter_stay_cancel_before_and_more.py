@@ -6,7 +6,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('loader', '0002_website_alter_tranche_options_alter_stay_checkin_and_more'),
+        ('data', '0002_website_alter_tranche_options_alter_stay_checkin_and_more'),
     ]
 
     operations = [

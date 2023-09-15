@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     'djangobower',
     'leaflet',
     'full_calendar.apps.FullCalendarConfig',
-    'loader.apps.LoaderConfig',
+    'data.apps.DataConfig',
     'latex_generator.apps.LatexGeneratorConfig',
     'django.contrib.admin',
     'django.contrib.auth',

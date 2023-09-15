@@ -33,7 +33,7 @@ class Migration(migrations.Migration):
                 ('longitude', models.FloatField()),
                 ('website', models.CharField()),
                 ('cancel_before', models.DateTimeField()),
-                ('tranche', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='loader.tranche')),
+                ('tranche', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='data.tranche')),
             ],
         ),
         migrations.AddConstraint(

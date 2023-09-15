@@ -6,7 +6,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('loader', '0005_alter_stay_payment_date'),
+        ('data', '0005_alter_stay_payment_date'),
     ]
 
     operations = [

@@ -1,7 +1,7 @@
 from django.contrib import admin
 from leaflet.admin import LeafletGeoAdmin
 
-from loader.models import SideTrip
+from data.models import SideTrip
 
 
 @admin.register(SideTrip)

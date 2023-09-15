@@ -4,8 +4,8 @@ from typing import Dict, List
 from django.contrib.staticfiles import finders
 from skyfield import api, almanac
 
-from loader.admin.models import try_make_naive
-from loader.models import Stay
+from data.admin.models import try_make_naive
+from data.models import Stay
 
 ts = api.load.timescale()
 ephemerids_file = finders.find("de421.bsp")
