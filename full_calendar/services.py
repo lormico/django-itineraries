@@ -4,6 +4,7 @@ from typing import Dict, List
 from django.contrib.staticfiles import finders
 from skyfield import api, almanac
 
+from loader.admin.models import try_make_naive
 from loader.models import Stay
 
 ts = api.load.timescale()
@@ -42,10 +43,12 @@ def get_night_events(stays) -> List[Dict[str, str]]:
     """
     night_events = list()
     for stay in stays:
-        stay_duration = stay.checkout.replace(hour=0, minute=0, second=0) - stay.checkin.replace(hour=0, minute=0,
-                                                                                                 second=0)
-        stay_days = [stay.checkin + timedelta(days=day) for day in range(stay_duration.days)]
-        stay_location = api.wgs84.latlon(*reversed(stay.location))
+        lon, lat = stay.location
+        stay_nights = (
+                try_make_naive(stay.checkout, lat, lon).date() -
+                try_make_naive(stay.checkin, lat, lon).date()).days
+        stay_days = [stay.checkin + timedelta(days=day) for day in range(stay_nights)]
+        stay_location = api.wgs84.latlon(lat, lon)
         for stay_day in stay_days:
             t0 = ts.from_datetime(stay_day)
             t1 = ts.from_datetime(stay_day + timedelta(days=1))
@@ -55,7 +58,6 @@ def get_night_events(stays) -> List[Dict[str, str]]:
                 "end": sunrise.utc_iso(),
                 "display": "background",
                 "className": "event-night",
-                "backgroundColor": "#62627F"
             })
 
     return night_events

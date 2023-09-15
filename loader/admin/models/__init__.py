@@ -13,6 +13,7 @@ def localize(datetime, lat, lon):
 
 
 def try_make_naive(datetime, lat, lon):
+    # TODO move this function elsewhere
     if is_naive(datetime):
         return datetime
     tzname = tf.timezone_at(lat=lat, lng=lon)
