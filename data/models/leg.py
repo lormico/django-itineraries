@@ -1,7 +1,7 @@
 from django.db import models
 
 
-class Tranche(models.Model):
+class Leg(models.Model):
     id = models.CharField('ID', primary_key=True)
     short_descr = models.CharField('Short Description')
     order = models.IntegerField(unique=True)

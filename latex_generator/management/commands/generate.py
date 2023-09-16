@@ -5,7 +5,7 @@ from django.core.management import BaseCommand
 from django.template.backends.jinja2 import Template
 from django.template.loader import get_template
 
-from data.models import Stay, Tranche
+from data.models import Stay, Leg
 
 
 def save_generated(file_name, content):
@@ -18,7 +18,7 @@ class Command(BaseCommand):
     help = "Genera i documenti LaTeX per l'itinerario"
 
     def handle(self, *args, **options):
-        tranches = Tranche.objects.all().order_by("order")
+        tranches = Leg.objects.all().order_by("order")
         template: Template = get_template("tranches.tex")
         rendered = template.render(context={"tranches": tranches})
         save_generated("tranches.tex", rendered)

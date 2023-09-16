@@ -1,8 +1,8 @@
 from django.contrib import admin
 
-from data.models import Tranche, Website
+from data.models import Leg, Website
 
-admin.site.register(Tranche)
+admin.site.register(Leg)
 admin.site.register(Website)
 
 from .models.side_trip import SideTripAdmin

@@ -1,11 +1,11 @@
 from django.contrib.gis.db import models
 from django.contrib.gis.geos import Point
 
-from data.models import Tranche, Website
+from data.models import Leg, Website
 
 
 class Stay(models.Model):
-    tranche = models.ForeignKey(Tranche, on_delete=models.DO_NOTHING)
+    tranche = models.ForeignKey(Leg, on_delete=models.DO_NOTHING)
     id = models.CharField('ID', primary_key=True)
     name = models.CharField()
     checkin = models.DateTimeField('Check-in (local time)')
