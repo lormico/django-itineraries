@@ -1,5 +1,5 @@
 """
-URL configuration for itinerari project.
+URL configuration for django_itineraries project.
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/4.2/topics/http/urls/
