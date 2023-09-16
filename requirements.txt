@@ -9,3 +9,5 @@ django-scheduler
 django-bower
 django-leaflet
 skyfield
+djangorestframework
+djangorestframework-gis

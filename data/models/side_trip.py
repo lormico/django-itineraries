@@ -1,5 +1,6 @@
 from django.contrib.gis.db import models
 from django.contrib.gis.geos import Point
+from django.utils.functional import classproperty
 
 from data.models import Leg
 
@@ -14,6 +15,10 @@ class SideTrip(models.Model):
     @property
     def geomap_icon(self):
         return "https://maps.google.com/mapfiles/ms/micons/hiker.png"
+
+    @classproperty
+    def layer_label(self):
+        return "Side Trips"
 
     def __str__(self):
         return f"{self.name}"

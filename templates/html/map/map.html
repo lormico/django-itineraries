@@ -17,23 +17,32 @@
 {% block content %}
     {% leaflet_map "map" %}
     <script type="text/javascript">
-        const dataurl = '{% url "data" %}';
-
         window.addEventListener("map:init", function (event) {
             const map = event.detail.map;
 
             map.resetviewControl.remove();
             map.zoomControl.remove();
 
-            // Download GeoJSON data with Ajax
-            fetch(dataurl)
-                .then(function (response) {
-                    return response.json();
+            const layerControl = L.control.layers(null, null).addTo(map);
+            const allLayers = L.featureGroup();
+
+            Promise.all([
+                {% for layer_url in layer_urls %}
+                fetch("{{ layer_url }}").then(response => response.json()),
+                {% endfor %}
+            ]).then((featureSets) => {
+                featureSets.forEach((data) => {
+                    const parsedData = L.geoJson.css(data);
+                    map.addLayer(parsedData);
+                    allLayers.addLayer(parsedData);
+
+                    layerControl.addOverlay(parsedData, data['layerLabel']);
                 })
-                .then(function (data) {
-                    const geoJsonLayer = L.geoJson.css(data).addTo(map);
-                    map.fitBounds(geoJsonLayer.getBounds());
-                });
+            }).then(() => {
+                map.fitBounds(allLayers.getBounds());
+            }).catch((err) => {
+                console.log(err);
+            });
         });
     </script>
 {% endblock %}

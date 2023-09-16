@@ -1,8 +1,15 @@
 from django.http import HttpResponse
 from django.template import loader
+from django.urls import reverse
 
 
-# Create your views here.
 def index(request):
     template = loader.get_template("map/map.html")
-    return HttpResponse(template.render(context={"title": "Map"}, request=request))
+    context = {
+        "title": "Map",
+        "layer_urls": [
+            reverse("stay-list"),
+            reverse("sidetrip-list"),
+        ]
+    }
+    return HttpResponse(template.render(context=context, request=request))
