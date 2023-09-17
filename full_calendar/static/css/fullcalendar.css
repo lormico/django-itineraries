@@ -1,0 +1,28 @@
+#calendar {
+    height: 100%;
+}
+
+.event-night {
+    z-index: -1 !important;
+    background: repeating-linear-gradient(
+            135deg,
+            transparent,
+            transparent 5px,
+            #5973A6 5px,
+            #5973A6 10px
+    ) !important;
+}
+
+.event-payment {
+    background-color: #e4c700;
+    border-color: #97823d;
+}
+
+.event-payment .fc-event-title {
+    color: #1f1e18;
+}
+
+.event-cancel-before {
+    background-color: #ff4a5d;
+    border-color: #a33038;
+}

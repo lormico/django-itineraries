@@ -1,3 +1,4 @@
+from babel import numbers
 from django.contrib.gis.db import models
 from django.contrib.gis.geos import Point
 from django.utils.functional import classproperty
@@ -29,6 +30,10 @@ class Stay(models.Model):
     @property
     def geomap_icon(self):
         return "https://maps.google.com/mapfiles/ms/micons/lodging.png"
+
+    @property
+    def formatted_price(self):
+        return numbers.format_currency(self.price, self.price_currency)
 
     @classproperty
     def layer_label(self):

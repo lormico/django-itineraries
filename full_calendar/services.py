@@ -1,4 +1,4 @@
-from datetime import timedelta
+from datetime import datetime, timedelta
 from typing import Dict, List
 
 from skyfield import api, almanac
@@ -26,7 +26,7 @@ def get_events() -> List[Dict[str, str]]:
         } for stay in stays
     ]
 
-    return stay_events + get_night_events(stays)
+    return stay_events + get_night_events(stays) + get_payment_events(stays) + get_cancel_before_events(stays)
 
 
 def get_night_events(stays) -> List[Dict[str, str]]:
@@ -59,3 +59,43 @@ def get_night_events(stays) -> List[Dict[str, str]]:
             })
 
     return night_events
+
+
+def get_payment_events(stays):
+    events = list()
+    for stay in stays:
+        events.append({
+            "title": f"Pay {stay.formatted_price} to {stay.name} on {stay.website}",
+            "start": stay.payment_date.isoformat(),
+            "end": stay.payment_date.isoformat(),
+            "allDay": True,
+            "className": "event-payment",
+        })
+
+    return events
+
+
+def get_cancel_before_events(stays):
+    events = list()
+    for stay in stays:
+        events.append({
+            "title": f"Last chance to cancel {stay.name} on {stay.website}!",
+            "start": (stay.cancel_before - timedelta(hours=1)).isoformat(),
+            "end": stay.cancel_before.isoformat(),
+            "className": "event-cancel-before",
+        })
+
+    return events
+
+
+def get_initial_date(events):
+    # Returns the start date of the first future event
+    # We don't bother with past payment events, for example
+    sorted_events = sorted(events, key=lambda x: x["start"])
+    initial_date = None
+    for event in sorted_events:
+        if datetime.fromisoformat(event["start"]) >= datetime.today():
+            initial_date = event["start"]
+            break
+
+    return initial_date

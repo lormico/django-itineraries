@@ -12,29 +12,16 @@
             var calendarEl = document.getElementById('calendar');
             var calendar = new FullCalendar.Calendar(calendarEl, {
                 initialView: 'timeGridWeek',
+                initialDate: '{{ initial_date }}',
                 events: {{ events | safe }},
-                timeZone: 'Asia/Tokyo'
+                timeZone: '{{ time_zone }}'
             });
             calendar.render();
         });
 
     </script>
-    <style>
-        #calendar {
-            height: 100%;
-        }
 
-        .event-night {
-            z-index: -1 !important;
-            background: repeating-linear-gradient(
-                    135deg,
-                    transparent,
-                    transparent 5px,
-                    #5973A6 5px,
-                    #5973A6 10px
-            ) !important;
-        }
-    </style>
+    <link rel="stylesheet" href="{% static "css/fullcalendar.css" %}">
 {% endblock %}
 
 {% block content %}

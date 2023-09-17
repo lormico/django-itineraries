@@ -11,3 +11,4 @@ django-leaflet
 skyfield
 djangorestframework
 djangorestframework-gis
+Babel

@@ -163,9 +163,11 @@ STATIC_URL = 'static/'
 STATIC_ROOT = BASE_DIR / "static"
 
 # The additional locations the staticfiles app will traverse
+import full_calendar
 import map
 STATICFILES_DIRS = (
     MAIN_APP_DIR / 'static',
+    ("full_calendar", Path(full_calendar.__file__).parent / "static"),
     ("map", Path(map.__file__).parent / "static")
 )
 #######################
