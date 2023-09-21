@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block head %}
+    <link rel="stylesheet" href="{% static "map/css/google_map.css" %}">
+    <script type="module" src="{% static "map/js/google_map_init.js" %}"></script>
+{% endblock %}
+
+{% block content %}
+    <div id="map"></div>
+
+    <!-- Custom controls -->
+    <div style="display: none">
+        <div class="controls zoom-control">
+            <button class="zoom-control-in" title="Zoom In">+</button>
+            <button class="zoom-control-out" title="Zoom Out">−</button>
+        </div>
+        <div class="controls maptype-control maptype-control-is-map">
+            <button class="maptype-control-map" title="Show road map">Map</button>
+            <button class="maptype-control-satellite" title="Show satellite imagery">Satellite</button>
+        </div>
+        <div class="controls fullscreen-control">
+            <button title="Toggle Fullscreen">
+                <div class="fullscreen-control-icon fullscreen-control-top-left"></div>
+                <div class="fullscreen-control-icon fullscreen-control-top-right"></div>
+                <div class="fullscreen-control-icon fullscreen-control-bottom-left"></div>
+                <div class="fullscreen-control-icon fullscreen-control-bottom-right"></div>
+            </button>
+        </div>
+        <div class="controls layer-selector">
+            <ul id="layer-list">
+            </ul>
+        </div>
+    </div>
+
+    <script
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA7q98xxXnXC_EhnXIpXEi_E-_QMs9G9hM&callback=initMap&v=weekly"
+            defer
+    ></script>
+{% endblock %}

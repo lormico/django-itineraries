@@ -40,6 +40,11 @@ class GeoFeatureModelCssSerializer(GeoFeatureModelSerializer):
 
         feature["popupTemplate"] = "<strong>{name}</strong>"
 
+        feature["extraProperties"] = {
+            "start": instance.start_datetime,
+            "end": instance.end_datetime,
+        }
+
         return feature
 
 

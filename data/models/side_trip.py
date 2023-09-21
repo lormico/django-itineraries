@@ -16,6 +16,14 @@ class SideTrip(models.Model):
     def geomap_icon(self):
         return "https://maps.google.com/mapfiles/ms/micons/hiker.png"
 
+    @property
+    def start_datetime(self):
+        return self.date
+
+    @property
+    def end_datetime(self):
+        return self.date
+
     @classproperty
     def layer_label(self):
         return "Side Trips"

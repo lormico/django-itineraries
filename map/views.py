@@ -4,7 +4,7 @@ from django.urls import reverse
 
 
 def index(request):
-    template = loader.get_template("map/map.html")
+    template = loader.get_template("map/google_map.html")
     context = {
         "title": "Map",
         "layer_urls": [

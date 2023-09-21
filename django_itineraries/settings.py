@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'full_calendar.apps.FullCalendarConfig',
     'data.apps.DataConfig',
     'latex_generator.apps.LatexGeneratorConfig',
+    'map.apps.MapConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

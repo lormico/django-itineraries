@@ -1,0 +1,16 @@
+# Use postgres/example user/password credentials
+version: '3.1'
+
+services:
+
+  db:
+    container_name: postgres
+    image: postgis/postgis
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: password
+    volumes:
+      - ~/postgres-data:/var/lib/postgresql/data
+#      - /media/lorenzo/B6361F0F361ECFEB/Users/Lorenzo/django_itineraries.sql:/dump.sql
+    ports:
+      - "5432:5432"

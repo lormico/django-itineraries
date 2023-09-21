@@ -32,6 +32,14 @@ class Stay(models.Model):
         return "https://maps.google.com/mapfiles/ms/micons/lodging.png"
 
     @property
+    def start_datetime(self):
+        return self.checkin
+
+    @property
+    def end_datetime(self):
+        return self.checkout
+
+    @property
     def formatted_price(self):
         return numbers.format_currency(self.price, self.price_currency)
 

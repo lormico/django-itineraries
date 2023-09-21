@@ -17,14 +17,41 @@
 {% block content %}
     {% leaflet_map "map" %}
     <script type="text/javascript">
+        {% comment %}
+        class DefaultDict extends Object {
+            constructor(getDefaultValue, ...objectConstructorArgs) {
+                super(objectConstructorArgs);
+
+                if (typeof getDefaultValue !== 'function') {
+                    throw new Error('getDefaultValue must be a function');
+                }
+
+                return new Proxy(this, {
+                    get: function (target, key) {
+                        if (!Reflect.has(target, key)) {
+                            Reflect.set(target, key, getDefaultValue(key));
+                        }
+
+                        return Reflect.get(target, key);
+                    },
+                });
+            }
+        }
+        {% endcomment %}
+
         window.addEventListener("map:init", function (event) {
             const map = event.detail.map;
 
             map.resetviewControl.remove();
             map.zoomControl.remove();
 
+            const dummy1 = L.layerGroup();
+            const dummy2 = L.layerGroup();
+
             const layerControl = L.control.layers(null, null).addTo(map);
             const allLayers = L.featureGroup();
+            const seenDays = new Set();
+            const dayLayers = new Map();
 
             Promise.all([
                 {% for layer_url in layer_urls %}
@@ -32,17 +59,46 @@
                 {% endfor %}
             ]).then((featureSets) => {
                 featureSets.forEach((data) => {
-                    const parsedData = L.geoJson.css(data);
-                    map.addLayer(parsedData);
-                    allLayers.addLayer(parsedData);
+                    const featureGroup = L.featureGroup();
+                    data.features.forEach(feature => {
+                        const parsedFeature = L.geoJson.css(feature).addTo(featureGroup);
 
-                    layerControl.addOverlay(parsedData, data['layerLabel']);
-                })
+                        {#featureGroup.addLayer(parsedFeature);#}
+
+                        <!-- WIP -->
+                        const day = feature.extraProperties.start.slice(0,10);
+                        seenDays.add(day)
+                        if (!dayLayers.has(day)) {
+                            dayLayers[day] = L.featureGroup();
+                        }
+                        dayLayers[day].addLayer(parsedFeature);
+                    });
+
+                    {#map.addLayer(featureGroup);#}
+                    allLayers.addLayer(featureGroup);
+
+                    layerControl.addOverlay(featureGroup, data['layerLabel']);
+                });
             }).then(() => {
                 map.fitBounds(allLayers.getBounds());
+                seenDays.forEach(date => {
+                    layerControl.addOverlay(dayLayers[date], date);
+                });
             }).catch((err) => {
                 console.log(err);
             });
+
+            map.on("overlayadd overlayremove", () => {
+
+                if (map.hasLayer(dummy1)) {
+                    category1.addTo(content)
+                }
+                if (map.hasLayer(dummy2)) {
+                    category2.addTo(content)
+                }
+                // etc.
+            });
         });
+
     </script>
 {% endblock %}
